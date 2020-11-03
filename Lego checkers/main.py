@@ -29,18 +29,22 @@ def main_AI_vs_AI():
         game.update()
 
         if game.turn == WHITE:
-            value, new_board = alpha_beta_pruning(game.get_board(), 3, False, float("-inf"), float("inf"), game)
+            value, new_board = alpha_beta_pruning(game.get_board(), 4, False, float("-inf"), float("inf"), game)
             if new_board is None:
-                print('WOOOW')
+                print("White loose")
+                run = False
                 time.sleep(5000)
-            game.ai_move(new_board)
+            else:
+                game.ai_move(new_board)
 
         else:
             value, new_board = alpha_beta_pruning(game.get_board(), 3, True, float("-inf"), float("inf"), game)
             if new_board is None:
-                print('WOOOW')
+                print("White loose")
+                run = False
                 time.sleep(5000)
-            game.ai_move(new_board)
+            else:
+                game.ai_move(new_board)
 
         if game.winner() != None:
             run = False
@@ -61,8 +65,13 @@ def main_Human_vs_AI():
         game.update()
 
         if game.turn == WHITE:
-            value, new_board = alpha_beta_pruning(game.get_board(), 3, False, float("-inf"), float("inf"), game)
-            game.ai_move(new_board)
+            value, new_board = alpha_beta_pruning(game.get_board(), 5, False, float("-inf"), float("inf"), game)
+            if new_board is None:
+                print("White loose")
+                run = False
+                time.sleep(5000)
+            else:
+                game.ai_move(new_board)
 
         if game.winner() != None:
             run = False

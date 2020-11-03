@@ -28,7 +28,7 @@ def get_all_moves(board, color, game):
 
 def alpha_beta_pruning(position, depth, max_player, alpha, beta, game):
     if depth == 0 or position.winner() != None:
-        return position.evaluation_3(), position
+        return position.evaluation_2(), position
 
     if max_player:
         max_eval = float("-inf")
@@ -46,9 +46,11 @@ def alpha_beta_pruning(position, depth, max_player, alpha, beta, game):
         for move in moves:
             evaluation = alpha_beta_pruning(move, depth-1, False, alpha, beta, game)[0]
             max_eval = max(max_eval, evaluation)
-            alpha = max(alpha, max_eval)
             if max_eval == evaluation:
                 best_move = move
+
+            alpha = max(alpha, max_eval)
+
             if beta <= alpha:
                 break
 
@@ -68,7 +70,7 @@ def alpha_beta_pruning(position, depth, max_player, alpha, beta, game):
         for move in moves:
             evaluation = alpha_beta_pruning(move, depth-1, True, alpha, beta, game)[0]
             min_eval = min(min_eval, evaluation)
-            alpha = max(alpha, min_eval)
+            beta = min(beta, min_eval)
             if min_eval == evaluation:
                 best_move = move
             if beta <= alpha:
